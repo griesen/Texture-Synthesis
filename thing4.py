@@ -414,7 +414,6 @@ def main(param_file, state_file, save_file, targets0, data_layer='data', crop=No
         G = get_graph(net)
         succ_layers = G.successors(data_layer)
         start_layer = [ln for ln in N._layer_names if ln in succ_layers][0]
-    # caffe.set_mode_gpu()
     targets = {}
     """
     for (img_arr, lay_wt_tp_list) in targets0:
@@ -454,7 +453,7 @@ def main(param_file, state_file, save_file, targets0, data_layer='data', crop=No
                 raise ValueError("diff type %s not recognized" % tp)
             targets[lay].append((wt, T, tp))
 
-    global COUNT 
+    global COUNT
     COUNT = count_start
 
     if start_normal == 'zeros':
