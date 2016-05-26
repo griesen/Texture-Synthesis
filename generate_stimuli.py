@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE
 def get_input_images(path):
     input_ims = []
     for filename in os.listdir(path):
-        if '.jpg' in filename:
+        if '.jpg' in filename or '.png' in filename:
             input_ims.append(filename)
     return input_ims
 
