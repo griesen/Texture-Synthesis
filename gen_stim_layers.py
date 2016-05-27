@@ -35,13 +35,32 @@ def save_stim(stim_name):
     savemat(save_name, {save_name: stim})
 
 
+def get_image(filepath):
+    im = Image.open(filepath).convert('RGB')
+    width, height = im.size
+    diff = abs(width - height)
+    if width > height:
+        if diff % 2:
+            im = im.crop((diff / 2 + 1, 0, width - diff / 2, height))
+        else:
+            im = im.crop((diff / 2, 0, width - diff / 2, height))
+    else:
+        if diff % 2:
+            im = im.crop((0, diff / 2 + 1, width, height - diff / 2))
+        else:
+            im = im.crop((0, diff / 2, width, height - diff / 2))
+    print im.size
+    im = np.asarray(im.resize((256, 256), resample=Image.ANTIALIAS)).transpose(2, 0, 1) \
+         .reshape((1, 3, 256, 256))[:, :, 16:-16][:, :, :, 16:-16]
+    return im
+
+
 def generate_layers(path, filename, out_path):
     for i, layer in enumerate(layers):
         print i
         sys.stdout.flush()
         ts = time.time()
-        im = np.asarray(Image.open(os.path.join(path, filename)).convert('RGB').resize((256, 256), resample=Image.ANTIALIAS)) \
-                        .transpose(2, 0, 1).reshape((1, 3, 256, 256))[:, :, 16:-16][:, :, :, 16:-16]
+        im = get_image(os.path.join(path, filename))
         im_name = filename[:filename.find('.')]
         dirname = os.path.join(out_path,im_name)
         if not os.path.exists(dirname):
