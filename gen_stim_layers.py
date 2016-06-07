@@ -3,8 +3,9 @@ import os
 import numpy as np
 import time
 import sys
-from PIL import Image
+from PIL import Image, ImageChops
 from scipy.io import savemat
+from matplotlib.pyplot as plt
 
 STAT_LIST = [('conv1_1', 1000, 'corr_rs'),
              ('conv1_2', 100, 'corr_rs'),
@@ -33,6 +34,29 @@ def save_stim(stim_name):
     stim = stim.squeeze().transpose((1,2,0)).astype('uint8')
     save_name = stim_name[:stim_name.find('.npy')]
     savemat(save_name, {save_name: stim})
+
+
+def trim(im):
+    bg = Image.new(im.mode, im.size, im.getpixel((0,0)))
+    diff = ImageChops.difference(im, bg)
+    diff = ImageChops.add(diff, diff, 2.0, -100)
+    bbox = diff.getbbox()
+    if bbox:
+        return im.crop(bbox)
+
+
+def create_jpg(stim_name)
+    stim = np.load(stim_name)
+    frame1 = plt.gca()
+    frame1.set_adjustable('box-forced')
+    frame1.axes.get_xaxis().set_visible(False)
+    frame1.axes.get_yaxis().set_visible(False)
+    plt.imshow(stim)
+    save_name = stim_name[:stim_name.find('.npy')] + '.jpg'
+    plt.savefig(save_name)
+    im = Image.open(save_name)
+    im = trim(im)
+    im.save(save_name)
 
 
 def get_image(filepath):
@@ -82,6 +106,7 @@ def generate_layers(path, filename, out_path):
                                  save_freq=100,
                                  seed=0)
         save_stim(stim_name)
+        create_jpg(stim_name)
         print time.time()-ts
         sys.stdout.flush()
 
