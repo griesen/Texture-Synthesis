@@ -3,9 +3,8 @@ import os
 import numpy as np
 import time
 import sys
-from PIL import Image, ImageChops
+from PIL import Image
 from scipy.io import savemat
-from matplotlib.pyplot as plt
 
 STAT_LIST = [('conv1_1', 1000, 'corr_rs'),
              ('conv1_2', 100, 'corr_rs'),
