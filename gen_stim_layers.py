@@ -45,7 +45,7 @@ def trim(im):
         return im.crop(bbox)
 
 
-def create_jpg(stim_name)
+def create_jpg(stim_name):
     stim = np.load(stim_name)
     frame1 = plt.gca()
     frame1.set_adjustable('box-forced')
