@@ -32,31 +32,11 @@ layers = [1, 3, 6, 11, None]
 def save_stim(stim_name):
     stim = np.load(stim_name)
     stim = stim.squeeze().transpose((1,2,0)).astype('uint8')
-    save_name = stim_name[:stim_name.find('.npy')]
-    savemat(save_name, {save_name: stim})
-
-
-def trim(im):
-    bg = Image.new(im.mode, im.size, im.getpixel((0,0)))
-    diff = ImageChops.difference(im, bg)
-    diff = ImageChops.add(diff, diff, 2.0, -100)
-    bbox = diff.getbbox()
-    if bbox:
-        return im.crop(bbox)
-
-
-def create_jpg(stim_name):
-    stim = np.load(stim_name)
-    frame1 = plt.gca()
-    frame1.set_adjustable('box-forced')
-    frame1.axes.get_xaxis().set_visible(False)
-    frame1.axes.get_yaxis().set_visible(False)
-    plt.imshow(stim)
-    save_name = stim_name[:stim_name.find('.npy')] + '.jpg'
-    plt.savefig(save_name)
-    im = Image.open(save_name)
-    im = trim(im)
-    im.save(save_name)
+    mat_save_name = stim_name[:stim_name.find('.npy')]
+    savemat(mat_save_name, {save_name: stim})
+    jpg_save_name = stim_name[:stim_name.find('.npy')] + '.jpg'
+    img = Image.fromarray(stim, 'RGB')
+    img.save(jpg_save_name)
 
 
 def get_image(filepath):
@@ -106,7 +86,6 @@ def generate_layers(path, filename, out_path):
                                  save_freq=100,
                                  seed=0)
         save_stim(stim_name)
-        create_jpg(stim_name)
         print time.time()-ts
         sys.stdout.flush()
 
