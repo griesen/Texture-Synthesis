@@ -32,7 +32,7 @@ def save_stim(stim_name):
     stim = np.load(stim_name)
     stim = stim.squeeze().transpose((1,2,0)).astype('uint8')
     mat_save_name = stim_name[:stim_name.find('.npy')]
-    savemat(mat_save_name, {save_name: stim})
+    savemat(mat_save_name, {mat_save_name: stim})
     jpg_save_name = stim_name[:stim_name.find('.npy')] + '.jpg'
     img = Image.fromarray(stim, 'RGB')
     img.save(jpg_save_name)
