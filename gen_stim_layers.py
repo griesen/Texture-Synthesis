@@ -59,6 +59,8 @@ def get_image(filepath):
 
 
 def generate_layers(path, filename, out_path):
+    seed = np.random.randint(2 ** 32)
+    print 'Seed used:', seed
     for i, layer in enumerate(layers):
         print i
         sys.stdout.flush()
@@ -83,7 +85,7 @@ def generate_layers(path, filename, out_path):
                                  crop=(16, -16, 16, -16),
                                  save_dir = os.path.join(dirname, im_name+'_layer'+str(i)+'_history'),
                                  save_freq=100,
-                                 seed=0)
+                                 seed=seed)
         save_stim(stim_name)
         print time.time()-ts
         sys.stdout.flush()
