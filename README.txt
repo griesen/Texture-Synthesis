@@ -20,7 +20,7 @@ You will only have to run this once per Sherlock user.
 
 Order of operations to run pipeline on given set of images (either .png or .jpg):
 
-1) Create a directory and place only the desired images in this directory (do not add any other images if you don't want to run them)
+1) Create a directory and place only the desired input images in this directory (do not add any other images if you don't want to run them)
 
 2) In the root directory, run the following: 
 python generate_stimuli.py /path/to/input/folder /path/to/output/folder
