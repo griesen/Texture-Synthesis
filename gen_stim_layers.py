@@ -70,6 +70,9 @@ def generate_layers(path, filename, out_path):
         dirname = os.path.join(out_path,im_name)
         if not os.path.exists(dirname):
             os.mkdir(dirname)
+        orig = im.squeeze().transpose((1,2,0)).astype('uint8')
+        img = Image.fromarray(orig, 'RGB')
+        img.save(os.path.join(dirname, im_name+'.o.jpg'))
         if layer is not None:
             STATS = STAT_LIST[:layer]
         else:

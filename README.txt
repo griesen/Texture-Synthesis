@@ -33,3 +33,5 @@ in the network will contain:
     * (input filename)_layerK.npy - stores the actual raw pixel values of the generated image in a .npy file
     * (input filename)_layerK.mat - stores the actual raw pixel values of the generated image in a .mat file
     * (input filename)_layerK_history - not that important. Stores progress made by optimizer every 100 iterations
+
+In addition to these, the folder will also contain the original, cropped and reshaped image that served as input.
